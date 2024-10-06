@@ -30,9 +30,12 @@ class LinearCongruentialGenerator:
         else:
             self._seed = seed
         
-    def generate(self, num_bits, min=0, max=None) -> int:
+    def generate(self, num_bits=None, min=0, max=None) -> int:
         # Gera um numero pseudo-aleatorio
         self._seed = (self._a * self._seed + self._c) % self._m
+
+        if num_bits is None:
+            return self._seed
 
         # Caso o numero nao tenha o numero de bits desejado, concatena ou trunca ele
         while self._seed.bit_length() != num_bits:
@@ -65,5 +68,5 @@ class LinearCongruentialGenerator:
 
         return self._seed
 
-    def generate_n_numbers(self, n, num_bits, min=0, max=None) -> list:
+    def generate_n_numbers(self, n, num_bits=None, min=0, max=None) -> list:
         return [self.generate(num_bits, min, max) for _ in range(n)]

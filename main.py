@@ -1,21 +1,17 @@
-from src.random_number_generators.linear_congruential import LinearCongruentialGenerator
-from src.random_number_generators.blum_blum_shub import BlumBlumShubGenerator
-from src.prime_number_validators import fermat_primality
-from src.prime_number_validators import miller_rabin
 from src.prime_number_generators import PrimeNumberGenerator
-
-def generate_numbers_LCG(n_random_numbers, num_bits, new_seed=None) -> list:
-    generator = LinearCongruentialGenerator(seed=new_seed)
-    random_numbers_list = generator.generate_n_numbers(n_random_numbers, num_bits)
-    
-    return random_numbers_list
-
-def generate_numbers_BBS(n_random_numbers, num_bits, new_seed=None) -> list:
-    generator = BlumBlumShubGenerator(seed=new_seed)
-    random_numbers_list = generator.generate_n_numbers(n_random_numbers, num_bits)
-    
-    return random_numbers_list
+from time import time
 
 if __name__ == "__main__":
-    print(generate_numbers_LCG(n_random_numbers=1, num_bits=128))
-    print(generate_numbers_BBS(n_random_numbers=1, num_bits=128))
+    prime_generator = PrimeNumberGenerator()
+    # levando tempo demais para gerar números com 2048 e 4096 bits (dezenas de segundos)
+    # quant_bits = [40, 56, 80, 128, 168, 224, 256, 512, 1024, 2048, 4096]
+    quant_bits = [40, 56, 80, 128, 168, 224, 256, 512, 1024]
+    for n_bits in quant_bits:
+        begin_t = time()
+        prime = prime_generator.generate_prime_number_LCG(num_bits=n_bits)
+        end_t = time()
+        exec_time = (end_t - begin_t)
+        print("Number: ", prime)
+        print("Number of bits: ", n_bits)
+        print("Generated in: {:.6f} s".format(exec_time))
+        print()
