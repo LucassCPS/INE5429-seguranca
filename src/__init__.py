@@ -1,0 +1,1 @@
+from .prime_number_generators import PrimeNumberGenerator

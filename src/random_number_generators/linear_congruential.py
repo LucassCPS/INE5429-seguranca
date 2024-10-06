@@ -1,4 +1,4 @@
-from random import randint
+from time import time
 
 """ 
 Artigo de referencia:
@@ -19,12 +19,51 @@ class LinearCongruentialGenerator:
         self._a = a
         self._c = c
         self._m = m
-        # garante que uma aleatoria suficientemente válida seja gerada caso não informada
-        self._seed = randint(1, m-1) if seed is None else seed
+
+        # Garante que uma aleatoria suficientemente válida seja gerada caso não informada      
+        if seed is None:
+            curr_time = int(time())
+            if curr_time >= 2**31:
+                self._seed = curr_time % 2**31
+            else:
+                self._seed = curr_time
+        else:
+            self._seed = seed
         
-    def generate(self) -> int:
+    def generate(self, num_bits, min=0, max=None) -> int:
+        # Gera um numero pseudo-aleatorio
         self._seed = (self._a * self._seed + self._c) % self._m
+
+        # Caso o numero nao tenha o numero de bits desejado, concatena ou trunca ele
+        while self._seed.bit_length() != num_bits:
+            current_bits = self._seed.bit_length()
+
+            # Se o número de bits for menor que o desejado, concatenamos mais bits
+            if current_bits < num_bits:
+                append_seed = (self._a * self._seed + self._c) % self._m
+                append_seed_bits = append_seed.bit_length()
+
+                # Calcula quantos bits ainda faltam
+                bits_needed = num_bits - current_bits
+
+                # Se o número de bits do numero a ser apendado for maior que o necessário, trunca ele
+                if append_seed_bits > bits_needed:
+                    append_seed = append_seed >> (append_seed_bits - bits_needed)
+                
+                # Realiza a concatenação
+                self._seed = (self._seed << bits_needed) | append_seed
+
+            # Caso o número de bits seja maior do que o desejado, removemos os bits excedentes à direita
+            elif current_bits > num_bits:
+                self._seed = self._seed >> (current_bits - num_bits)
+
+        # Certifica-se de que o número gerado esteja entre min e max
+        if max is not None:
+            self._seed = (self._seed % (max - min)) + min
+        else:
+            self._seed += min
+
         return self._seed
-    
-    def generate_n_numbers(self, n : int) -> list:
-        return [self.generate() for _ in range(n)]
+
+    def generate_n_numbers(self, n, num_bits, min=0, max=None) -> list:
+        return [self.generate(num_bits, min, max) for _ in range(n)]
