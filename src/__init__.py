@@ -1,1 +1,3 @@
 from .prime_number_generators import PrimeNumberGenerator
+from .prime_number_generators import PrimeGenAlgorithm
+from .prime_number_generators import PrimalityCriteria

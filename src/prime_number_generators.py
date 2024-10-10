@@ -2,6 +2,16 @@ from src.random_number_generators.linear_congruential import LinearCongruentialG
 from src.random_number_generators.blum_blum_shub import BlumBlumShubGenerator
 from src.prime_number_validators import fermat_primality
 from src.prime_number_validators import miller_rabin
+from enum import Enum
+
+class PrimeGenAlgorithm(Enum):
+    LCG = 1
+    BBS = 2
+
+class PrimalityCriteria(Enum):
+    FERMAT = 1
+    MILLER_RABIN = 2
+    BOTH = 3
 
 class PrimeNumberGenerator:
     def __init__(self, seed=None):
@@ -28,7 +38,7 @@ class PrimeNumberGenerator:
                 break
         return number
     
-    def generate_prime_numberBBS(self, num_bits, n_attempts=20):
+    def generate_prime_number_BBS(self, num_bits, n_attempts=20):
         number = 0
         while True:
             number = self._generate_odd_number_BBS(num_bits)
