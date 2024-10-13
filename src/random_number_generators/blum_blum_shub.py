@@ -15,7 +15,7 @@ De forma a melhorar a qualidade do gerador, a semente inicial deve ser escolhida
 """
 
 class BlumBlumShubGenerator:
-    def __init__(self, p=1601, q=2027, seed=None):
+    def __init__(self, p=1601, q=2027, seed=1728526033):
         self._M = p * q
         self._p = p
         self._q = q
