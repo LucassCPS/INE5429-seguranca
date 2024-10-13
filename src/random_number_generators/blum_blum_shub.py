@@ -37,8 +37,8 @@ class BlumBlumShubGenerator:
             return self._seed
 
         # Caso o numero nao tenha o numero de bits desejado, concatena ou trunca ele
-        while self._seed.bit_length() != num_bits:
-            current_bits = self._seed.bit_length()
+        current_bits = self._seed.bit_length()
+        while current_bits != num_bits:
 
             # Se o número de bits for menor que o desejado, concatenamos mais bits
             if current_bits < num_bits:
@@ -58,6 +58,8 @@ class BlumBlumShubGenerator:
             # Caso o número de bits seja maior do que o desejado, removemos os bits excedentes à direita
             elif current_bits > num_bits:
                 self._seed = self._seed >> (current_bits - num_bits)
+                
+            current_bits = self._seed.bit_length()
 
         # Certifica-se de que o número gerado esteja entre min e max
         if max is not None:

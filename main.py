@@ -25,37 +25,42 @@ def openssl_prime_check(prime: int):
     result = Popen(cmd, stdout=PIPE, shell=True).stdout.read().decode('utf-8')
 
     if "not" in result:
-        result = "not a prime"
-    else:
-        result = "prime"
+        return "not a prime"
+    return "prime"
 
-    return result
+def generate_prime_number_report(algorithm: PrimeGenAlgorithm, primality_criteria: PrimalityCriteria, report_file):
+    with open(report_file, "a") as file:
+        for bits in quant_bits_list:
+            begin_t = time()
+            prime = generate_prime_number(algorithm, primality_criteria, bits)
+            exec_time = time() - begin_t
+            openssl_result = openssl_prime_check(prime)
 
-def generate_prime_number_report(algorithm: PrimeGenAlgorithm, primality_criteria: PrimalityCriteria):
-    for bits in quant_bits_list:
-        begin_t = time()
-        prime = generate_prime_number(algorithm, primality_criteria, bits)
-        exec_time = time() - begin_t
-        openssl_result = openssl_prime_check(prime)
+            report = (f"Number: {prime}\n"
+                      f"Number of bits: {bits}\n"
+                      f"Generated in:  {exec_time:.10f}s\n"
+                      f"Openssl test evaluation: {openssl_result}\n\n")
 
-        print(f"Number: {prime}")
-        print(f"Number of bits: {bits}")
-        print(f"Generated in:  {exec_time:.6f}s")
-        print(f"Openssl test evaluation: {openssl_result}\n")
+            file.write(report)
 
 if __name__ == "__main__":
+    report_file = "prime_number_report.txt"
+
+    with open(report_file, "w") as file:
+        file.write("Prime Number Generation Report\n")
+        file.write("-" * 60 + "\n")
+
     combinations = [
-        (PrimeGenAlgorithm.LCG, PrimalityCriteria.BOTH),
-        (PrimeGenAlgorithm.BBS, PrimalityCriteria.BOTH),
         (PrimeGenAlgorithm.LCG, PrimalityCriteria.FERMAT),
         (PrimeGenAlgorithm.BBS, PrimalityCriteria.FERMAT),
         (PrimeGenAlgorithm.LCG, PrimalityCriteria.MILLER_RABIN),
         (PrimeGenAlgorithm.BBS, PrimalityCriteria.MILLER_RABIN)
     ]
-    
-    print("Generating prime numbers...")
-    print("-" * 60)
+
     for algorithm, criteria in combinations:
-        print(f"{algorithm.name} - {criteria.name}\n")
-        generate_prime_number_report(algorithm, criteria)
-        print("-" * 60)
+        header = f"{algorithm.name} - {criteria.name}\n"
+        with open(report_file, "a") as file:
+            file.write(header)
+        generate_prime_number_report(algorithm, criteria, report_file)
+        with open(report_file, "a") as file:
+            file.write("-" * 60 + "\n")

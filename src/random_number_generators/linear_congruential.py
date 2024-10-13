@@ -15,7 +15,7 @@ A formula de geração de números é tal que:
 De forma a melhorar a qualidade do gerador, a semente inicial deve ser escolhida de forma aleatória
 """
 class LinearCongruentialGenerator:
-    def __init__(self, a=1103515245, c=12345, m=2**31, seed=None):   
+    def __init__(self, a=1103515245, c=12345, m=2**32, seed=None):   
         self._a = a
         self._c = c
         self._m = m
@@ -23,8 +23,8 @@ class LinearCongruentialGenerator:
         # Garante que uma aleatoria suficientemente válida seja gerada caso não informada      
         if seed is None:
             curr_time = int(time())
-            if curr_time >= 2**31:
-                self._seed = curr_time % 2**31
+            if curr_time >= 2**32:
+                self._seed = curr_time % 2**32
             else:
                 self._seed = curr_time
         else:
@@ -37,10 +37,9 @@ class LinearCongruentialGenerator:
         if num_bits is None:
             return self._seed
 
+        current_bits = self._seed.bit_length()
         # Caso o numero nao tenha o numero de bits desejado, concatena ou trunca ele
-        while self._seed.bit_length() != num_bits:
-            current_bits = self._seed.bit_length()
-
+        while current_bits != num_bits:
             # Se o número de bits for menor que o desejado, concatenamos mais bits
             if current_bits < num_bits:
                 append_seed = (self._a * self._seed + self._c) % self._m
@@ -59,6 +58,8 @@ class LinearCongruentialGenerator:
             # Caso o número de bits seja maior do que o desejado, removemos os bits excedentes à direita
             elif current_bits > num_bits:
                 self._seed = self._seed >> (current_bits - num_bits)
+                
+            current_bits = self._seed.bit_length()
 
         # Certifica-se de que o número gerado esteja entre min e max
         if max is not None:

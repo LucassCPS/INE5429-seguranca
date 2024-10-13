@@ -14,8 +14,10 @@ def fermat_primality(n, n_attemps=20) -> bool:
     if n < 2 or n % 2 == 0:
         return False
 
+    lcg_generator = LinearCongruentialGenerator()
+    n_bit_length = n.bit_length()
     for _ in range(n_attemps):
-        a = LinearCongruentialGenerator().generate(num_bits=n.bit_length(), min=2, max=n-2)
+        a = lcg_generator.generate(num_bits=n_bit_length, min=2, max=n-2)
         # a^(n-1) % n
         if pow(a, n - 1, n) != 1:
             return False

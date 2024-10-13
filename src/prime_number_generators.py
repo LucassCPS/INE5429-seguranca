@@ -31,19 +31,16 @@ class PrimeNumberGenerator:
         return number
 
     def generate_prime_number_LCG(self, num_bits, n_attempts=20):
-        number = 0
-        while True:
-            number = self._generate_odd_number_LCG(num_bits)
-            if fermat_primality(number, n_attempts) and miller_rabin(number, n_attempts):
-                break
+        number = self._generate_odd_number_LCG(num_bits)
+        while not (fermat_primality(number, n_attempts) and miller_rabin(number, n_attempts)):
+            number += 2 
         return number
+
     
     def generate_prime_number_BBS(self, num_bits, n_attempts=20):
-        number = 0
-        while True:
-            number = self._generate_odd_number_BBS(num_bits)
-            if fermat_primality(number, n_attempts) and miller_rabin(number, n_attempts):
-                break
+        number = self._generate_odd_number_BBS(num_bits)
+        while not fermat_primality(number, n_attempts) and miller_rabin(number, n_attempts):
+            number += 2
         return number
 
     def generate_prime_number_LCG_fermat(self, num_bits, n_attempts=20):

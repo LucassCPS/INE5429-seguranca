@@ -32,9 +32,10 @@ def miller_rabin(n, n_attempts=20) -> bool:
         m //= 2
         k += 1
     
+    lcg_generator = LinearCongruentialGenerator()
     for _ in range(n_attempts):
         # 'a': número aleatório tal que 2 <= a <= n - 2
-        a = LinearCongruentialGenerator().generate(num_bits=n.bit_length(), min=2, max=n-2)
+        a = lcg_generator.generate(num_bits=n.bit_length(), min=2, max=n-2)
 
         # 'ret': a^m % n
         ret = pow(a, m, n)
