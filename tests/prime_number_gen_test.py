@@ -1,8 +1,6 @@
 from src.prime_number_generators import PrimeNumberGenerator, PrimeGenAlgorithm, PrimalityCriteria
 from time import time
 from subprocess import Popen, PIPE
-from tests.random_number_benchmark_test import generate_report as generate_random_report
-from tests.prime_number_benchmark_test import generate_report as generate_prime_report
 
 # Lista de bits a serem utilizados na geração de primos
 quant_bits_list = [40, 56, 80, 128, 168, 224, 256, 512, 1024, 2048, 4096]
