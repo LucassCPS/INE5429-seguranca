@@ -38,14 +38,12 @@ class LinearCongruentialGenerator:
             return self._seed
 
         current_bits = self._seed.bit_length()
-        # Caso o numero nao tenha o numero de bits desejado, concatena ou trunca ele
+        # Caso o numero nao tenha o numero de bits desejado
         while current_bits != num_bits:
             # Se o número de bits for menor que o desejado, concatenamos mais bits
             if current_bits < num_bits:
                 append_seed = (self._a * self._seed + self._c) % self._m
                 append_seed_bits = append_seed.bit_length()
-
-                # Calcula quantos bits ainda faltam
                 bits_needed = num_bits - current_bits
 
                 # Se o número de bits do numero a ser apendado for maior que o necessário, trunca ele

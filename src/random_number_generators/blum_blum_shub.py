@@ -13,7 +13,6 @@ A formula de geração de números é tal que:
     Xn+1 = (Xn^2) mod M, sendo M o produto de dois primos 'p' e 'q' grandes e congruentes a 3 mod 4
 De forma a melhorar a qualidade do gerador, a semente inicial deve ser escolhida de forma aleatória e ser coprima a M
 """
-
 class BlumBlumShubGenerator:
     def __init__(self, p=1601, q=2027, seed=1728526033):
         self._M = p * q
@@ -36,16 +35,13 @@ class BlumBlumShubGenerator:
         if num_bits is None:
             return self._seed
 
-        # Caso o numero nao tenha o numero de bits desejado, concatena ou trunca ele
+        # Caso o numero nao tenha o numero de bits desejado
         current_bits = self._seed.bit_length()
         while current_bits != num_bits:
-
             # Se o número de bits for menor que o desejado, concatenamos mais bits
             if current_bits < num_bits:
                 append_seed = (self._seed ** 2) % self._M
                 append_seed_bits = append_seed.bit_length()
-
-                # Calcula quantos bits ainda faltam
                 bits_needed = num_bits - current_bits
 
                 # Se o número de bits do numero a ser apendado for maior que o necessário, trunca ele

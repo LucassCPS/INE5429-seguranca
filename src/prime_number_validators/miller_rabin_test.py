@@ -34,8 +34,8 @@ def miller_rabin(n, n_attempts=20) -> bool:
     
     lcg_generator = LinearCongruentialGenerator()
     for _ in range(n_attempts):
-        # 'a': número aleatório tal que 2 <= a <= n - 2
-        a = lcg_generator.generate(num_bits=n.bit_length(), min=2, max=n-2)
+        # 'a': número aleatório tal que 1 <= a < n
+        a = lcg_generator.generate(num_bits=n.bit_length(), min=1, max=n-1)
 
         # 'ret': a^m % n
         ret = pow(a, m, n)
@@ -46,6 +46,7 @@ def miller_rabin(n, n_attempts=20) -> bool:
         # Segundo teste (apenas se falhou no primeiro teste):
         passed = False   
         for _ in range(k - 1):
+            # 'ret': a^(2^i)m % n
             ret = pow(ret, 2, n)
             if ret == n - 1:
                 passed = True

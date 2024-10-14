@@ -1,0 +1,28 @@
+Prime Number Generation Report
+------------------------------------------------------------
+LCG - FERMAT
+LCG - FERMAT - 40 bits - Avg Time: 0.0002781 s
+LCG - FERMAT - 56 bits - Avg Time: 0.0002778 s
+LCG - FERMAT - 80 bits - Avg Time: 0.0004178 s
+LCG - FERMAT - 128 bits - Avg Time: 0.0015315 s
+LCG - FERMAT - 168 bits - Avg Time: 0.0022172 s
+LCG - FERMAT - 224 bits - Avg Time: 0.0053302 s
+LCG - FERMAT - 256 bits - Avg Time: 0.0078636 s
+LCG - FERMAT - 512 bits - Avg Time: 0.0750513 s
+LCG - FERMAT - 1024 bits - Avg Time: 0.8542556 s
+LCG - FERMAT - 2048 bits - Avg Time: 9.0921328 s
+LCG - FERMAT - 4096 bits - Avg Time: 143.8579002 s
+------------------------------------------------------------
+LCG - MILLER_RABIN
+LCG - MILLER_RABIN - 40 bits - Avg Time: 0.0001998 s
+LCG - MILLER_RABIN - 56 bits - Avg Time: 0.0002000 s
+LCG - MILLER_RABIN - 80 bits - Avg Time: 0.0006000 s
+LCG - MILLER_RABIN - 128 bits - Avg Time: 0.0013587 s
+LCG - MILLER_RABIN - 168 bits - Avg Time: 0.0022166 s
+LCG - MILLER_RABIN - 224 bits - Avg Time: 0.0053793 s
+LCG - MILLER_RABIN - 256 bits - Avg Time: 0.0084334 s
+LCG - MILLER_RABIN - 512 bits - Avg Time: 0.0766828 s
+LCG - MILLER_RABIN - 1024 bits - Avg Time: 0.8872357 s
+LCG - MILLER_RABIN - 2048 bits - Avg Time: 6.3156978 s
+LCG - MILLER_RABIN - 4096 bits - Avg Time: 163.2698564 s
+------------------------------------------------------------
